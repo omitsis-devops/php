@@ -37,4 +37,4 @@ jobs:
         build-args: PHP_VERSION=${{ matrix.php-version }}
         platforms: linux/amd64,linux/arm64
         push: true
-        tags: ghcr.io/${{ github.repository_owner }}/${{ github.repository.name }}:php-${{ matrix.php-version }}-fpm-alpine
+        tags: ghcr.io/${{ github.repository_owner }}/php:php-${{ matrix.php-version }}-fpm-alpine
