@@ -2,6 +2,8 @@
 
 This repository contains a custom PHP Docker image based on PHP-FPM with an Alpine Linux distribution. The image is tailored to enhance PHP development by including essential tools and extensions.
 
+It uses the official php-fpm image, and adds some extras based on that image.
+
 ## Features
 
 - **PHP Version**: Dynamically specified version of PHP-FPM.
