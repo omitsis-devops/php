@@ -18,7 +18,7 @@ RUN usermod --uid $UID $UNAME && groupmod --gid $GID $UGROUP
 
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
 RUN chmod +x /usr/local/bin/install-php-extensions && \
-    install-php-extensions bcmath exif mysqli pdo_mysql zip gd xdebug
+    install-php-extensions bcmath exif mysqli pdo_mysql zip gd xdebug opcache
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
