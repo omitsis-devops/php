@@ -20,6 +20,7 @@ ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/do
 RUN chmod +x /usr/local/bin/install-php-extensions && \
     install-php-extensions bcmath exif mysqli pdo_mysql zip gd xdebug opcache
 
+
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 RUN mkdir -p /var/www/html && chown -R $UID:$GID /var/www/html
