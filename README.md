@@ -60,6 +60,7 @@ It uses the official php-fpm image, and adds some extras based on that image.
 
 Feel free to open issues or submit pull requests to contribute to this project.
 
+
 ---
 
 For detailed usage and customization, refer to the Dockerfile and related script files within the repository.
