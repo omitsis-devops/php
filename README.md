@@ -56,6 +56,17 @@ It uses the official php-fpm image, and adds some extras based on that image.
 - **Healthcheck**: This runs via a command script, configured for intervals of 30s.
 - **User Rights**: Adjusts file permissions to ensure proper access and security.
 
+## Checking Published Images
+
+Images are pushed to both `ghcr.io/omitsis-devops/php` and `omitsis/php` (Docker Hub). To confirm both registries got the same build (requires `curl` and `jq`, no login):
+
+```sh
+./scripts/check-registries.sh          # all versions
+./scripts/check-registries.sh 8.3 8.5  # specific versions
+```
+
+`same_build: MATCH` means the digests are identical on both registries.
+
 ## Contributing
 
 Feel free to open issues or submit pull requests to contribute to this project.
