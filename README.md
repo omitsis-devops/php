@@ -67,6 +67,18 @@ Images are pushed to both `ghcr.io/omitsis-devops/php` and `omitsis/php` (Docker
 
 `same_build: MATCH` means the digests are identical on both registries.
 
+## Rebuilding After a PHP Patch Release
+
+The workflow rebuilds every version on each push to `main` and every Monday at 03:00 UTC. To pick up a new PHP patch (e.g. `8.4.x`) sooner:
+
+1. Wait until the official `php:<version>-fpm-alpine` image is updated on Docker Hub.
+2. Push to `main`. Committing this change (or an empty commit) is enough:
+   ```sh
+   git commit --allow-empty -m "Rebuild for PHP <version> patch" && git push
+   ```
+   Alternatively, trigger it manually from the Actions tab ("Run workflow"), no commit needed.
+3. Once the workflow finishes, confirm with `./scripts/check-registries.sh <version>`.
+
 ## Contributing
 
 Feel free to open issues or submit pull requests to contribute to this project.
