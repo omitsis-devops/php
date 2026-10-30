@@ -19,7 +19,7 @@ It uses the official php-fpm image, and adds some extras based on that image.
 - **PHP FPM Configuration**: Adds status path for monitoring.
 - **Time Zone Configuration**: Sets default timezone to Europe/Brussels.
 - **Locale**: Configured to `en_US.UTF-8`.
-- **Tools**: Composer for PHP dependency management.
+- **Tools**: Composer for PHP dependency management (installer checked against Composer's published signature; the build fails on a mismatch).
 - **Development Tools**: Includes `git`, `bash`, and a health check script.
 - **Health Check**: Built-in health check for PHP-FPM service.
 - **Custom User and Group**: Modifies UID/GID to support specific user/group.

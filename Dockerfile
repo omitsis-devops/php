@@ -21,7 +21,12 @@ RUN chmod +x /usr/local/bin/install-php-extensions && \
     install-php-extensions bcmath exif mysqli pdo_mysql zip gd xdebug opcache
 
 
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+# Composer's installer, checked against the signature Composer publishes
+# (https://getcomposer.org/doc/faqs/how-to-install-composer-programmatically.md)
+RUN curl -fsSL https://getcomposer.org/installer -o /tmp/composer-setup.php && \
+    php -r "if (hash_file('sha384', '/tmp/composer-setup.php') !== trim(file_get_contents('https://composer.github.io/installer.sig'))) { fwrite(STDERR, 'Composer installer checksum mismatch'.PHP_EOL); exit(1); }" && \
+    php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer && \
+    rm /tmp/composer-setup.php
 
 RUN mkdir -p /var/www/html && chown -R $UID:$GID /var/www/html
 WORKDIR /var/www/html
