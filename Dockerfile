@@ -32,7 +32,8 @@ RUN mkdir -p /var/www/html && chown -R $UID:$GID /var/www/html
 WORKDIR /var/www/html
 
 COPY development/xdebug.ini /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-RUN chmod 644 /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini && \
+COPY conf.d/zz-omitsis-hardening.ini /usr/local/etc/php/conf.d/zz-omitsis-hardening.ini
+RUN chmod 644 /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini /usr/local/etc/php/conf.d/zz-omitsis-hardening.ini && \
     chmod -R 755 /usr/local/lib/php/extensions/ && \
     rm -f $PHP_INI_DIR/conf.d/docker-fpm.ini
 

@@ -19,6 +19,7 @@ It uses the official php-fpm image, and adds some extras based on that image.
 - **PHP FPM Configuration**: Adds status path for monitoring.
 - **Time Zone Configuration**: Sets default timezone to Europe/Brussels.
 - **Locale**: Configured to `en_US.UTF-8`.
+- **PHP Hardening**: `conf.d/zz-omitsis-hardening.ini` sets `zend.exception_ignore_args = On` (the `php.ini-production` default; the image ships no `php.ini`, so it would otherwise be Off). Mitigates CVE-2026-129474 / GHSA-8mjj-2r7p-4hg2 on PHP 8.5.
 - **Tools**: Composer for PHP dependency management (installer checked against Composer's published signature; the build fails on a mismatch).
 - **Development Tools**: Includes `git`, `bash`, and a health check script.
 - **Health Check**: Built-in health check for PHP-FPM service.
@@ -44,6 +45,7 @@ It uses the official php-fpm image, and adds some extras based on that image.
 - **Dockerfile**: Defines the custom PHP image setup.
 - **php-fpm-healthcheck.sh**: Script for checking PHP-FPM health.
 - **development/xdebug.ini**: Configuration file for Xdebug.
+- **conf.d/zz-omitsis-hardening.ini**: PHP hardening settings, copied to `/usr/local/etc/php/conf.d/`.
 
 ## Environment Variables
 
