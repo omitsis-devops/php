@@ -6,7 +6,7 @@ COPY ./php-fpm-healthcheck.sh /usr/bin/php-fpm-healthcheck
 RUN chmod +x /usr/bin/php-fpm-healthcheck
 
 RUN apk add --no-cache fcgi bash linux-headers tzdata musl-locales shadow git mariadb-client unzip zip freetype-dev libpng-dev jpeg-dev libjpeg-turbo-dev libwebp libwebp-tools libavif-dev imagemagick && \
-    echo "pm.status_path = /status" >> /usr/local/etc/php-fpm.d/zzz-docker.conf && \
+    printf '[www]\npm.status_path = /status\n' >> /usr/local/etc/php-fpm.d/zzz-docker.conf && \
     cp /usr/share/zoneinfo/Europe/Brussels /etc/localtime && \
     echo "Europe/Brussels" > /etc/timezone && \
     apk del tzdata
@@ -17,8 +17,12 @@ ARG UNAME=www-data UGROUP=www-data UID=1000 GID=1000
 RUN usermod --uid $UID $UNAME && groupmod --gid $GID $UGROUP
 
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
+# xdebug has no release supporting PHP 8.6 yet (pecl caps it at 8.5.99): skip it there.
+# Drop the 8.6 exception once xdebug supports it.
 RUN chmod +x /usr/local/bin/install-php-extensions && \
-    install-php-extensions bcmath exif mysqli pdo_mysql zip gd xdebug opcache
+    XDEBUG=xdebug; \
+    case "$(php -r 'echo PHP_MAJOR_VERSION.".".PHP_MINOR_VERSION;')" in 8.6) XDEBUG= ;; esac; \
+    install-php-extensions bcmath exif mbstring mysqli pdo_mysql zip gd $XDEBUG opcache
 
 
 # Composer's installer, checked against the signature Composer publishes
@@ -35,6 +39,7 @@ COPY development/xdebug.ini /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 COPY conf.d/zz-omitsis-hardening.ini /usr/local/etc/php/conf.d/zz-omitsis-hardening.ini
 RUN chmod 644 /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini /usr/local/etc/php/conf.d/zz-omitsis-hardening.ini && \
     chmod -R 755 /usr/local/lib/php/extensions/ && \
+    { [ -f "$(php-config --extension-dir)/xdebug.so" ] || rm -f /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini; } && \
     rm -f $PHP_INI_DIR/conf.d/docker-fpm.ini
 
 HEALTHCHECK --interval=30s --timeout=1s CMD php-fpm-healthcheck || exit 1

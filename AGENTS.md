@@ -3,7 +3,7 @@
 Base image `ghcr.io/omitsis-devops/php:<ver>-fpm-alpine` (also `omitsis/php` on Docker Hub). It is
 the `FROM` of omitsis-stack-templates' `services/php-fpm/Dockerfile`, so every site's php-fpm
 builds on it. GitHub Actions (`.github/workflows/docker-image.yml`) builds and publishes it for
-PHP 7.4–8.5 on every push to `main`, weekly and on manual runs: a push to `main` ships to every
+PHP 7.4 and 8.1–8.6 on every push to `main`, weekly and on manual runs: a push to `main` ships to every
 site. Don't push without the user's go-ahead.
 
 ## Rule: Dockerfile changes

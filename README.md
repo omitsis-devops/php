@@ -6,16 +6,17 @@ It uses the official php-fpm image, and adds some extras based on that image.
 
 ## Features
 
-- **PHP Version**: Dynamically specified version of PHP-FPM.
+- **PHP Version**: Dynamically specified version of PHP-FPM. Published tags: `7.4`, `8.1`, `8.2`, `8.3`, `8.4`, `8.5`, `8.6` (`<version>-fpm-alpine`).
 - **Alpine Base**: Lightweight and secure Alpine Linux.
 - **Default Extensions**:
   - bcmath
   - exif
+  - mbstring (built in upstream up to 8.5; installed explicitly since 8.6 dropped it)
   - mysqli
   - pdo_mysql
   - zip
   - gd
-  - xdebug
+  - xdebug (not on 8.6 yet: no xdebug release supports it; the image skips it and its ini there)
 - **PHP FPM Configuration**: Adds status path for monitoring.
 - **Time Zone Configuration**: Sets default timezone to Europe/Brussels.
 - **Locale**: Configured to `en_US.UTF-8`.

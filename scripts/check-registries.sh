@@ -3,7 +3,7 @@
 # Same digest on both sides = same build reached both registries.
 set -euo pipefail
 
-VERSIONS="${*:-7.4 8.1 8.2 8.3 8.4 8.5}"
+VERSIONS="${*:-7.4 8.1 8.2 8.3 8.4 8.5 8.6}"
 ACCEPT="application/vnd.oci.image.index.v1+json,application/vnd.docker.distribution.manifest.list.v2+json,application/vnd.oci.image.manifest.v1+json,application/vnd.docker.distribution.manifest.v2+json"
 GHCR_TOKEN=$(curl -s "https://ghcr.io/token?scope=repository:omitsis-devops/php:pull" | jq -r .token)
 
